@@ -8,16 +8,19 @@ import os
 @csrf_exempt
 def upload_passport(request):
     if request.method == "POST":
-        file = request.FILES["photo"]
+        try:
+            file = request.FILES["photo"]
 
-        color_param = request.POST.get("bg_color", "255,255,255")
-        bg_color = tuple(int(x) for x in color_param.split(","))
+            color_param = request.POST.get("bg_color", "255,255,255")
+            bg_color = tuple(int(x) for x in color_param.split(","))
 
-        copies = int(request.POST.get("copies", 8))
+            copies = int(request.POST.get("copies", 8))
 
-        result = process_pipeline(file, bg_color=bg_color, copies=copies)
-        return JsonResponse(result)
-
+            result = process_pipeline(file, bg_color=bg_color, copies=copies)
+            return JsonResponse(result)
+        except Exception as e:
+            return JsonResponse({"error":str(e)}, status = 500)
+    return JsonResponse({"error":"Only POST method allowed"}, status = 405)
 
 @csrf_exempt
 def download_image(request):
