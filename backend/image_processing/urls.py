@@ -1,6 +1,7 @@
 from django.urls import path
-from .views import process_image
+from .views import upload_passport, download_image
 
 urlpatterns = [
-    path('process-image/', process_image),
+    path('process-image/', upload_passport),
+    path('download/', download_image),
 ]

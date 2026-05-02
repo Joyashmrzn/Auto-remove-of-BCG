@@ -1,14 +1,32 @@
-from rest_framework.decorators import api_view
-from rest_framework.response import Response
+# views.py
+from django.http import FileResponse, JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+from django.conf import settings
 from .services import process_pipeline
+import os
 
-@api_view(['POST'])
-def process_image(request):
-    file = request.FILES['image']
+@csrf_exempt
+def upload_passport(request):
+    if request.method == "POST":
+        file = request.FILES["photo"]
 
-    image_url = process_pipeline(file)
+        color_param = request.POST.get("bg_color", "255,255,255")
+        bg_color = tuple(int(x) for x in color_param.split(","))
 
-    return Response({
-        "success": True,
-        "image": image_url
-    })
+        copies = int(request.POST.get("copies", 8))
+
+        result = process_pipeline(file, bg_color=bg_color, copies=copies)
+        return JsonResponse(result)
+
+
+@csrf_exempt
+def download_image(request):
+    filename = request.GET.get("file")
+    if not filename:
+        return JsonResponse({"error": "No file specified"}, status=400)
+
+    path = os.path.join(settings.MEDIA_ROOT, filename)
+    if not os.path.exists(path):
+        return JsonResponse({"error": "File not found"}, status=404)
+
+    return FileResponse(open(path, "rb"), as_attachment=True, filename=filename)
