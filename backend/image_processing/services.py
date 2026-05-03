@@ -6,6 +6,7 @@ from PIL import Image,ImageEnhance,ImageFilter,ImageDraw
 import io
 import cv2
 import numpy as np
+import cloudinary.uploader
 
 def save_temp(file):
     path = os.path.join(settings.MEDIA_ROOT, "temp_" + file.name)
@@ -106,11 +107,14 @@ def create_print_layout(image_bytes, copies):
     return output.getvalue()
 
 def save_final(image_bytes, prefix="passport"):
-    filename = f"{prefix}_{uuid.uuid4()}.png"
-    path = os.path.join(settings.MEDIA_ROOT, filename)
-    with open(path, "wb") as f:
-        f.write(image_bytes)
-    return settings.MEDIA_URL + filename
+    # Upload to Cloudinary instead of local disk
+    result = cloudinary.uploader.upload(
+        image_bytes,
+        folder="passport_photos",
+        public_id=f"{prefix}_{uuid.uuid4()}",
+        resource_type="image"
+    )
+    return result["secure_url"] 
 
 def enchance_image(image_bytes):
     img = Image.open(io.BytesIO(image_bytes)).convert("RGBA")  # ← change RGB to RGBA
@@ -175,7 +179,7 @@ def process_pipeline(file, bg_color = (255,255,255), copies = 8):
     print_bytes = create_print_layout(colored, copies = copies)
     print_url = save_final(print_bytes, prefix="print")
 
-    os.remove(temp_path)
+    
 
     return{
         "single_photo_url" : single_url,
