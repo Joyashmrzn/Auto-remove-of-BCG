@@ -60,7 +60,8 @@ MIDDLEWARE = [
 CORS_ALLOW_ORIGIN_ALL = True
 
 CORS_ALLOWED_ORIGINS = [
-    "http://localhost:5173",  
+    "http://localhost:5173",
+    "https://auto-remove-of-bcg-production.up.railway.app",  
 ]
 
 ROOT_URLCONF = 'urls'

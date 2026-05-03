@@ -21,7 +21,7 @@ export default function PreviewCard({ result }) {
       <div className="bg-white border border-gray-200 rounded-xl p-4">
         <p className="text-sm font-medium text-gray-700 mb-3">Single Photo Preview</p>
         <img
-          src={`http://127.0.0.1:8000${result.single_photo_url}`}
+          src={`${import.meta.env.VITE_API_URL}${result.single_photo_url}`}
           alt="Passport"
           className="w-full rounded-lg border border-gray-100 object-contain max-h-64"
         />
@@ -31,7 +31,7 @@ export default function PreviewCard({ result }) {
       <div className="bg-white border border-gray-200 rounded-xl p-4">
         <p className="text-sm font-medium text-gray-700 mb-3">Print Layout (A4)</p>
         <img
-          src={`http://127.0.0.1:8000${result.print_layout_url}`}
+          src={`${import.meta.env.VITE_API_URL}${result.print_layout_url}`}
           alt="Print Layout"
           className="w-full rounded-lg border border-gray-100 object-contain max-h-64"
         />
