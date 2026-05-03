@@ -3,7 +3,7 @@ export default function DownloadButtons({ result }) {
 
   const handleDownload = async (url, filename) => {
     try {
-      const response = await fetch(`${import.meta.env.VITE_API_URL}${url}`);
+      const response = await fetch(url);
       const blob = await response.blob();
       const blobUrl = URL.createObjectURL(blob);
 

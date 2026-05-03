@@ -1,4 +1,8 @@
+import { useState } from "react";
+
 export default function PreviewCard({ result }) {
+  const [activeTab, setActiveTab] = useState("single");
+
   if (!result) {
     return (
       <div className="bg-white border border-gray-200 rounded-xl flex-1 flex flex-col items-center justify-center py-20 text-center px-6">
@@ -16,26 +20,56 @@ export default function PreviewCard({ result }) {
   }
 
   return (
-    <>
-      {/* Single Photo Preview */}
-      <div className="bg-white border border-gray-200 rounded-xl p-4">
-        <p className="text-sm font-medium text-gray-700 mb-3">Single Photo Preview</p>
-        <img
-          src={`${import.meta.env.VITE_API_URL}${result.single_photo_url}`}
-          alt="Passport"
-          className="w-full rounded-lg border border-gray-100 object-contain max-h-64"
-        />
+    <div className="bg-white border border-gray-200 rounded-xl p-4">
+
+      {/* Tabs */}
+      <div className="flex gap-2 mb-4">
+        <button
+          onClick={() => setActiveTab("single")}
+          className={`flex-1 py-2 rounded-lg text-xs font-medium transition-all ${
+            activeTab === "single"
+              ? "bg-blue-600 text-white"
+              : "bg-gray-100 text-gray-500 hover:bg-gray-200"
+          }`}
+        >
+          Single Photo
+        </button>
+        <button
+          onClick={() => setActiveTab("print")}
+          className={`flex-1 py-2 rounded-lg text-xs font-medium transition-all ${
+            activeTab === "print"
+              ? "bg-blue-600 text-white"
+              : "bg-gray-100 text-gray-500 hover:bg-gray-200"
+          }`}
+        >
+          Print Layout (A4)
+        </button>
       </div>
 
-      {/* Print Layout Preview */}
-      <div className="bg-white border border-gray-200 rounded-xl p-4">
-        <p className="text-sm font-medium text-gray-700 mb-3">Print Layout (A4)</p>
-        <img
-          src={`${import.meta.env.VITE_API_URL}${result.print_layout_url}`}
-          alt="Print Layout"
-          className="w-full rounded-lg border border-gray-100 object-contain max-h-64"
-        />
-      </div>
-    </>
+      {/* Single Photo Tab */}
+      {activeTab === "single" && (
+        <div className="flex flex-col items-center">
+          <img
+            src={result.single_photo_url}
+            alt="Passport"
+            className="w-full rounded-lg border border-gray-100 object-contain max-h-64"
+          />
+          <p className="text-xs text-gray-400 mt-2">2×2 inch • 300 DPI • Ready to print</p>
+        </div>
+      )}
+
+      {/* Print Layout Tab */}
+      {activeTab === "print" && (
+        <div className="flex flex-col items-center">
+          <img
+            src={result.print_layout_url}
+            alt="Print Layout"
+            className="w-full rounded-lg border border-gray-100 object-contain max-h-64"
+          />
+          <p className="text-xs text-gray-400 mt-2">A4 sheet • Multiple copies • Cut along dashed lines</p>
+        </div>
+      )}
+
+    </div>
   );
 }
