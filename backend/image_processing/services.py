@@ -21,14 +21,13 @@ def save_temp(file):
 
 REMOVE_BG_API = 'jKucvVPyfnU5Yy5yApgQKXA3'
 
-def remove_background(image_path):
+def remove_background(image_bytes): 
     response = requests.post(
         "https://api.remove.bg/v1.0/removebg",
-        headers= {"X-Api-Key": REMOVE_BG_API},
-        files= {"image_file": open(image_path, "rb")},
-        data= {"size": "auto"}
+        headers={"X-Api-Key": REMOVE_BG_API},
+        files={"image_file": ("image.png", image_bytes)},  
+        data={"size": "auto"}
     )
-
     if response.status_code == 200:
         return response.content
     else:
@@ -166,9 +165,9 @@ def smart_crop(image_bytes):
     return buffer.tobytes()
 
 def process_pipeline(file, bg_color = (255,255,255), copies = 8):
-    temp_path = save_temp(file)
+    image_bytes = file.read() 
 
-    no_bg = remove_background(temp_path)
+    no_bg = remove_background(image_bytes)
     cropped = smart_crop(no_bg)
     resized = resize_passport(cropped)
     enhance = enchance_image(resized)
