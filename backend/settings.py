@@ -61,7 +61,8 @@ CORS_ALLOW_ORIGIN_ALL = True
 
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173",
-    "https://auto-remove-of-bcg-production.up.railway.app",  
+    "https://auto-remove-of-bcg-production.up.railway.app",
+    "https://passportsnap-rouge.vercel.app",  
 ]
 
 ROOT_URLCONF = 'urls'
