@@ -47,28 +47,30 @@ export default function PreviewCard({ result }) {
       </div>
 
       {/* Single Photo Tab */}
-      {activeTab === "single" && (
-        <div className="flex flex-col items-center">
-          <img
-            src={result.single_photo_url}
-            alt="Passport"
-            className="w-full rounded-lg border border-gray-100 object-contain max-h-64"
-          />
-          <p className="text-xs text-gray-400 mt-2">2×2 inch • 300 DPI • Ready to print</p>
-        </div>
-      )}
+{activeTab === "single" && (
+  <div className="flex flex-col items-center">
+    <img
+      src={result.single_photo_url.replace("/upload/", "/upload/f_auto,q_auto/")}
+      alt="Passport"
+      crossOrigin="anonymous"
+      className="w-full rounded-lg border border-gray-100 object-contain max-h-64"
+    />
+    <p className="text-xs text-gray-400 mt-2">2×2 inch • 300 DPI • Ready to print</p>
+  </div>
+)}
 
-      {/* Print Layout Tab */}
-      {activeTab === "print" && (
-        <div className="flex flex-col items-center">
-          <img
-            src={result.print_layout_url}
-            alt="Print Layout"
-            className="w-full rounded-lg border border-gray-100 object-contain max-h-64"
-          />
-          <p className="text-xs text-gray-400 mt-2">A4 sheet • Multiple copies • Cut along dashed lines</p>
-        </div>
-      )}
+{/* Print Layout Tab */}
+{activeTab === "print" && (
+  <div className="flex flex-col items-center">
+    <img
+      src={result.print_layout_url.replace("/upload/", "/upload/f_auto,q_auto/")}
+      alt="Print Layout"
+      crossOrigin="anonymous"
+      className="w-full rounded-lg border border-gray-100 object-contain max-h-64"
+    />
+    <p className="text-xs text-gray-400 mt-2">A4 sheet • Multiple copies • Cut along dashed lines</p>
+  </div>
+)}
 
     </div>
   );

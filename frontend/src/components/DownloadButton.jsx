@@ -1,24 +1,15 @@
 export default function DownloadButtons({ result }) {
   if (!result) return null;
 
-  const handleDownload = async (url, filename) => {
-    try {
-      const response = await fetch(url);
-      const blob = await response.blob();
-      const blobUrl = URL.createObjectURL(blob);
-
-      const link = document.createElement("a");
-      link.href = blobUrl;
-      link.download = filename;
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-
-      URL.revokeObjectURL(blobUrl);
-    } catch (err) {
-      console.error("Download failed:", err);
-    }
-  };
+const handleDownload = (url, filename) => {
+  const downloadUrl = url.replace("/upload/", "/upload/fl_attachment/");
+  const link = document.createElement("a");
+  link.href = downloadUrl;
+  link.download = filename;
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+};
 
   return (
     <div className="grid grid-cols-2 gap-3">
