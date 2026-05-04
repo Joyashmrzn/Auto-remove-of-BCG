@@ -174,11 +174,10 @@ def process_pipeline(file, bg_color = (255,255,255), copies = 8):
     colored = add_background_color(enhance, color=bg_color)
 
     single_url = save_final(colored, prefix="single")
-
+    print("Single URL:", single_url)
     print_bytes = create_print_layout(colored, copies = copies)
     print_url = save_final(print_bytes, prefix="print")
-
-    
+    print("Print URL:", print_url)
 
     return{
         "single_photo_url" : single_url,
