@@ -121,7 +121,7 @@ export default function Home() {
         {/* Info Cards */}
         <div className="grid grid-cols-3 gap-4 mt-8">
           {[
-            { title: "AI Background Removal", desc: "Powered by remove.bg for precise cutouts" },
+            // { title: "AI Background Removal", desc: "Powered by remove.bg for precise cutouts" },
             { title: "Face Detection & Crop", desc: "OpenCV automatically centers your face" },
             { title: "Print Ready A4", desc: "300 DPI output, perfect for any print shop" },
           ].map((card, i) => (
